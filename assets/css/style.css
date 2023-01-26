@@ -62,28 +62,28 @@ html {
 }
 
 /* STYLING */
-header {
+
+#sidebar {
     text-align: center;
 }
 
+
 h1 {
     margin-top: -10px;
+
 }
 
 #search-form {
     text-align: center;
-}
 
-#search-form > label {
-    font-family: var();
 }
 
 input {
     height: 2.3rem;
-    margin-top: 1.4rem;
+    margin-top: 0.5rem;
     border: none;
-    border-bottom: violet 1px solid;
-    border-top: violet 1px solid;
+    border-bottom: violet 2px solid;
+    border-top: violet 2px solid;
     background-color: #444;
 }
 
@@ -91,12 +91,15 @@ input {
 #button-search {
     margin-top: 1rem;
     height: 2rem;
-    width: 5rem;
+    width: 9rem;
+    background-color: white;
+    border: none;
 }
 
 /* CITY LIST BUTTONS */
-button {
-    /* TODO */
+.button-city {
+    border: none;
+    border-top: white 2px solid;
 }
 
 
