@@ -12,69 +12,54 @@ html {
 }
 
 /* POSITIONING */
-/* .container {
-    display:grid;
-    grid-gap: 5px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-} */
-
-#top {
-    /* display:grid;
-    grid-gap: 5px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    height: 70vh; */
+#hero {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
+    height: 50vh;
 }
 
 #bottom {
     display: flex;
-    justify-content: space-between;
+    height: 50vh;
 }
 
-#sidebar, #current-location, .daily-forecast {
+#sidebar, #current-weather, .daily-forecast {
     /* TODO: Values for testing only */
-	background-color: #444;
+	background-color: rgb(140, 138, 138);
     color: #fff;
     border-radius: 5px;
-    padding: 20px;
+    padding: 10px;
+    border: #fff 2px solid;
 }
 
-#current-location {
-    /* grid-column: 1 / 4;
-    grid-row: 1 / 4;
-    height: 100%; */
-    width: 70vw;
+/* Main weather area, showing todays date / weather info */
+#current-weather {
+    width: 50vw;
 }
 
+/* Header, input, search box and search history list */
 #sidebar {
-    /* grid-column: 4 / 6;
-    grid-row: 1 / 4; */
-    width: 28vw;
+    width: 50vw;
 }
 
 .daily-forecast {
- /* min-height: 30vh; */
+    width: 25%;
 }
-
-
 
 /* STYLING */
 
 #sidebar {
-    text-align: center;
+
 }
 
 
 h1 {
-    margin-top: -10px;
+
 
 }
 
 #search-form {
-    text-align: center;
+ 
 
 }
 
@@ -82,9 +67,9 @@ input {
     height: 2.3rem;
     margin-top: 0.5rem;
     border: none;
-    border-bottom: violet 2px solid;
-    border-top: violet 2px solid;
-    background-color: #444;
+    /* border-bottom: violet 2px solid;
+    border-top: violet 2px solid; */
+    /* background-color: #444; */
 }
 
 /* SEARCH BUTTON */
@@ -96,7 +81,7 @@ input {
     border: none;
 }
 
-/* CITY LIST BUTTONS */
+/* CITY HISTORY LIST BUTTONS */
 .button-city {
     border: none;
     border-top: white 2px solid;
@@ -114,7 +99,18 @@ input {
         flex-direction: column;
     }
 
-    #sidebar, #current-location, .daily-forecast {
+    #sidebar, #current-weather, .daily-forecast {
         width: 100vw;
+    }
+
+    #sidebar {
+        display: flex;
+        flex-direction: row;
+        height: 30vh;
+    }
+
+    #current-weather {
+        min-height: 40vh;
+        width: 50vw;
     }
 }
