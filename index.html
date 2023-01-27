@@ -10,66 +10,69 @@
 
 <body>
     <div class="container">
-        <div id="sidebar">
-
-            <header>
-                <h1>Weather Dashboard</h1>
-                <p>Search for a city for a 5 day forecast</p>
-            </header>
-
-            <form action="" id="search-form">
-                <!-- <label for="search">Search</label> -->
-                <input placeholder="Enter a city name" type="text" name="search" id="search">
-                <button type="submit" id="button-search">Search</button>
-            </form>
-
-            <section id="history-container">
-                <h3>Your History</h3>
-                <div id="city-history">
-                    <!-- TODO: Render button elements dynamically -->
-                </div>
-            </section>
+        
+        <div id="top">
+            <div id="sidebar">
+                <header>
+                    <h1>Weather Dashboard</h1>
+                    <p>Search for a city for a 5 day forecast</p>
+                </header>
+                <form action="" id="search-form">
+                    <!-- <label for="search">Search</label> -->
+                    <input placeholder="Enter a city name" type="text" name="search" id="search">
+                    <button type="submit" id="button-search">Search</button>
+                </form>
+                <section id="history-container">
+                    <h3>Your History</h3>
+                    <div id="city-history">
+                        <!-- TODO: Render button elements dynamically -->
+                    </div>
+                </section>
+            </div>
+            <main id="current-location">
+                <h2 id="city-title"></h2>
+                <p class="forecast-date" id="forecast-date-main"></p>
+                <p class="forecast-temp" id="forecast-temp-main"></p>
+                <img src="" alt="" class="weather-logo" id="weather-logo-main"/>
+                <p class="forecast-humidity" id="forecast-humidity-main"></p>
+                <p></p>
+            </main>
         </div>
 
-        <main id="current-location">
-            <h2 id="city-title"></h2>
-            <p class="forecast-date" id="forecast-date-main"></p>
-            <p class="forecast-temp" id="forecast-temp-main"></p>
-            <img src="" alt="" class="weather-logo" id="weather-logo-main"/>
-            <p class="forecast-humidity" id="forecast-humidity-main"></p>
-            <p></p>
-        </main>
 
-        <div class="daily-forecast" id="forecast-day-1">
-            <h3></h3>
-            <p class="forecast-date"></p>
-            <p class="forecast-temp"></p>
-            <img src="" alt="" class="weather-logo" />
-            <p class="forecast-humidity"></p>
-        </div>
-
-        <div class="daily-forecast" id="forecast-day-2">
-            <h3></h3>
-            <p class="forecast-date"></p>
-            <p class="forecast-temp"></p>
-            <img src="" alt="" class="weather-logo" />
-            <p class="forecast-humidity"></p>
-        </div>
-
-        <div class="daily-forecast" id="forecast-day-3">
-            <h3></h3>
-            <p class="forecast-date"></p>
-            <p class="forecast-temp"></p>
-            <img src="" alt="" class="weather-logo" />
-            <p class="forecast-humidity"></p>
-        </div>
-
-        <div class="daily-forecast" id="forecast-day-4">
-            <h3></h3>
-            <p class="forecast-date"></p>
-            <p class="forecast-temp"></p>
-            <img src="" alt="" class="weather-logo" />
-            <p class="forecast-humidity"></p>
+        <div id="bottom">
+    
+            <div class="daily-forecast" id="forecast-day-1">
+                <h3></h3>
+                <p class="forecast-date"></p>
+                <p class="forecast-temp"></p>
+                <img src="" alt="" class="weather-logo" />
+                <p class="forecast-humidity"></p>
+            </div>
+    
+            <div class="daily-forecast" id="forecast-day-2">
+                <h3></h3>
+                <p class="forecast-date"></p>
+                <p class="forecast-temp"></p>
+                <img src="" alt="" class="weather-logo" />
+                <p class="forecast-humidity"></p>
+            </div>
+    
+            <div class="daily-forecast" id="forecast-day-3">
+                <h3></h3>
+                <p class="forecast-date"></p>
+                <p class="forecast-temp"></p>
+                <img src="" alt="" class="weather-logo" />
+                <p class="forecast-humidity"></p>
+            </div>
+    
+            <div class="daily-forecast" id="forecast-day-4">
+                <h3></h3>
+                <p class="forecast-date"></p>
+                <p class="forecast-temp"></p>
+                <img src="" alt="" class="weather-logo" />
+                <p class="forecast-humidity"></p>
+            </div>
         </div>
 
     </div>
