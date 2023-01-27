@@ -1,5 +1,5 @@
 /* FONTS */
-
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
 
 /* VARIABLES */
 
@@ -12,105 +12,43 @@ html {
 }
 
 /* POSITIONING */
-#hero {
-    display: flex;
-    flex-direction: row-reverse;
-    height: 50vh;
-}
 
-#bottom {
-    display: flex;
-    height: 50vh;
-}
-
-#sidebar, #current-weather, .daily-forecast {
-    /* TODO: Values for testing only */
-	background-color: rgb(140, 138, 138);
-    color: #fff;
-    border-radius: 5px;
-    padding: 10px;
-    border: #fff 2px solid;
-}
-
-/* Main weather area, showing todays date / weather info */
-#current-weather {
-    width: 50vw;
-}
-
-/* Header, input, search box and search history list */
-#sidebar {
-    width: 50vw;
-}
-
-.daily-forecast {
-    width: 25%;
-}
 
 /* STYLING */
 
-#sidebar {
-
+header {
+    text-align: center;
 }
 
-
-h1 {
-
-
-}
-
-#search-form {
- 
-
+form {
+    margin-bottom: 40px;
 }
 
 input {
-    height: 2.3rem;
-    margin-top: 0.5rem;
-    border: none;
-    /* border-bottom: violet 2px solid;
-    border-top: violet 2px solid; */
-    /* background-color: #444; */
+    height: 3rem;
 }
 
-/* SEARCH BUTTON */
-#button-search {
-    margin-top: 1rem;
-    height: 2rem;
-    width: 9rem;
-    background-color: white;
-    border: none;
+/* TODO: Position needs tweaking */
+#history-container {
+    margin-top: 2rem;
+    text-align: center;
 }
 
-/* CITY HISTORY LIST BUTTONS */
-.button-city {
-    border: none;
-    border-top: white 2px solid;
+.card {
+    color: #4B515D;
+    border-radius: 35px;
+}
+
+.temp {
+    /* color: #1C2331; */
+    margin: -10px 0;
+}
+
+.desc {
+    /* margin-top: 10px; */
 }
 
 
-/* MEDIA QUERIES */
-@media screen and (max-width: 900px) {
-    #top {
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    #bottom {
-        flex-direction: column;
-    }
-
-    #sidebar, #current-weather, .daily-forecast {
-        width: 100vw;
-    }
-
-    #sidebar {
-        display: flex;
-        flex-direction: row;
-        height: 30vh;
-    }
-
-    #current-weather {
-        min-height: 40vh;
-        width: 50vw;
-    }
+.further-info {
+    text-align: center;
 }
