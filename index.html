@@ -6,82 +6,55 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- STYLESHEETS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Weather Dashboard</title>
 </head>
 
 <body>
+
     <div class="container">
-
-        <div class="row" id="hero">
-
-            <aside class="order-1 order-md-2 col-12 col-md-4" id="sidebar">
-                <header>
+<div class="row">
+    
+            <div id="intro" class="row col-lg-6 text-center">
+    
+                <header class="col-md-6">
                     <h1>Weather Dashboard</h1>
-                    <p>Enter a city for a 5 day forecast.</p>
+                    <form id="search-form">
+                        <input type="text" name="search" id="search">
+                        <button id="button-search">Search</button>
+                    </form>
+                    <p>Search for a city above, or click on a city name from the list of your five most recent searches.</p>
                 </header>
-
-                <form class="input-group mb-3" id="search-form">
-                    <input type="text" class="form-control" name="search" id="search" placeholder="Enter a city name" aria-label="Search input">
-                    <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
-                  </form>
-                  
-
-                <!-- <form action="" id="search-form"> -->
-
-                    <!-- <input placeholder="Enter a city name" type="text" name="search" id="search" class="form-control">
-                    <button type="submit" class="btn btn" id="button-search">Search</button> -->
-                <!-- </form> -->
-
-                <hr />
-                
-                <section id="history-container">
-                    <h3>Your History</h3>
-                    <div id="city-history">
-                        <!-- TODO: Render button elements dynamically -->
-                    </div>
-                </section>
-            </aside>
-            
-                <main class="order-2 order-md-1 col-md-8" id="current-weather">
-                    <h2 id="city-title"></h2>
-                    <p class="forecast-date" id="forecast-date-main"></p>
-                    <p class="forecast-temp" id="forecast-temp-main"></p>
-                    <img src="" alt="" class="weather-logo" id="weather-logo-main" />
-                    <p class="forecast-humidity" id="forecast-humidity-main"></p>
-                    <p></p>
-                </main>
-           
-        </div>
-
-
-        <div class="row container py-5 h-100 d-flex justify-content-center align-items-center h-100" id="future-forecast">
-
-            <div class="col-md-3 daily-forecast">
-
+    
+                <div class="col-md-6" id="search-history">
+    
+                    <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit incidunt sed atque? Veniam recusandae molestiae doloribus, aperiam architecto quo repudiandae, totam deserunt similique quidem iste aliquid voluptas ea assumenda exercitationem.</p>
+    
+                </div>
             </div>
-            
-            <div class="col-md-3 daily-forecast">
-
+    
+            <div class="col-lg-6" id="current-weather">
+    
             </div>
- 
-            <div class="col-md-3 daily-forecast">
+</div>
+    
 
-            </div>
-            
-            <div class="col-md-3 daily-forecast">
 
-            </div>
-
-  </div>
-
+    <div class="row" id="future-forecast">
+        <div class="daily-forecast col-md-6 col-lg-3"></div>
+        <div class="daily-forecast col-md-6 col-lg-3"></div>
+        <div class="daily-forecast col-md-6 col-lg-3"></div>
+        <div class="daily-forecast col-md-6 col-lg-3"></div>
+    </div>
     </div>
 
+    
 
+    <!-- SCRIPTS -->
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 

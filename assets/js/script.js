@@ -2,6 +2,10 @@
 // Search button element
 let searchButton = document.querySelector("#button-search");
 
+// ** VARIABLES (Time) ** //
+let now = moment();
+let today = now.format('dddd Do');
+
 // ** VARIABLES (Data) ** //
 // Assign the #search input value to a variable
 let cityInput;
@@ -147,33 +151,37 @@ function getNextFourDaysForecast(fiveDayURL) {
 function renderFutureWeatherInfo() {
 
     let dailyCollection = document.getElementById("future-forecast");
+    // now = moment();
 
 
     for (let i = 0; i < dailyCollection.children.length; i++) {
-        const index = dailyCollection.children[i];
 
-        index.innerHTML = `    
+        let dayIndex = dailyCollection.children[i];
+
+        let futureDay = getDay(dayIndex);
+
+        dayIndex.innerHTML = `    
                     <div class="card">
-                        <div class="card-body p-4">
+                        <div class="card-body">
                           <div class="d-flex">
-                                <h4 class="flex-grow-1">${cityTitle}</h4>
+                                <h4 >${futureDay}</h4>
+                                </div>
+                                
+                                <div class="temp-desc d-flex flex-column text-center">
                                 <img class="icon" src=${futureDayIconURL} alt="Weather icon indicating ${futureDayDescription} conditions" />
+                            <h5 class="temp display-4 mb-0 font-weight-bold">${futureDayTemp}°C</h5>
+                            <span class="small desc">${futureDayDescription}</span>
+                        </div>
+  
+                        <div class="d-flex align-items-center further-info text-center">
+                            <div class="flex-grow-1">
+                            <div><i class="bi bi-wind"></i><span> Wind Speed: </span><span class="ms-1">${futureDayWind}m/s</span></div>
+                            <div><i class="bi bi-moisture"></i> <span class="ms-1">Humidity: ${futureDayHumidity}%</span>
                             </div>
-  
-                    <div class="temp-desc d-flex flex-column text-center mt-5 mb-4">
-                        <h5 class="temp display-4 mb-0 font-weight-bold">${futureDayTemp}°C</h5>
-                        <span class="small desc">${futureDayDescription}</span>
-                    </div>
-  
-              <div class="d-flex align-items-center further-info">
-                <div class="flex-grow-1">
-                  <div><i class="bi bi-wind"></i><span> Wind Speed: </span><span class="ms-1">${futureDayWind}m/s</span></div>
-                  <div><i class="bi bi-moisture"></i> <span class="ms-1">Humidity: ${futureDayHumidity}%</span>
-                  </div>
-                </div>
-              </div>`
+                        </div>
+                    </div>`
 
-        dailyCollection.appendChild(index);
+        dailyCollection.appendChild(dayIndex);
 
     }
 }
@@ -197,8 +205,13 @@ function renderCurrentWeatherInfo() {
 
 
 
-function getDay () {
+function getDay (daysAhead) {
     // TODO: Create function using moment.js, to assign readable day values to the future forecast components
+    // let daysAhead = dayIndex + 1;
+    thisDay = moment().add(daysAhead, 'days');
+    // thisDay = now.add(1, 'd');
+    thisDay = thisDay.format('dddd Do');
+    return thisDay;
 }
 
 
