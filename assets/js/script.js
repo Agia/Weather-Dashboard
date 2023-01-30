@@ -1,10 +1,11 @@
 // ** VARIABLES (Elements) ** //
 // Search button element
 let searchButton = document.querySelector("#button-search");
+let cityListButton = document.querySelector(".button-list");
+let searchList = document.querySelector("#search-list");
 
 // ** VARIABLES (Time) ** //
-let now = moment();
-let today = now.format('dddd Do');
+let today = moment().format('dddd Do MMM');
 
 // ** VARIABLES (Data) ** //
 // Assign the #search input value to a variable
@@ -16,6 +17,7 @@ let currentHumidity;
 let currentWind;
 let iconCode;
 let description;
+let cityURL;
 let iconURL;
 // Variables to store the future daily forecasts data
 let futureDayTemp;
@@ -23,11 +25,11 @@ let futureDayHumidity;
 let futureDayWind;
 let futureDayIconCode;
 let futureDayDescription;
+let fiveDayURL;
 let futureDayIconURL;
+let futureDate;
 
-// Array to store searched locations
-let cityHistory = [];
-
+let searchHistory = [];
 
 
 // ** EVENT LISTENERS ** //
@@ -36,26 +38,87 @@ searchButton.addEventListener("click", function (event) {
     // Prevents default action
     event.preventDefault();
 
-    cityInput = document.querySelector("#search").value;
+    // Sets variable with value input in search input, with trimmed whitespace
+    cityInput = document.querySelector("#search").value.trim();
 
-    // TODO: Considering clearing current displayed if null input
     // Checks that there is input and returns if not
     if (cityInput !== "") {
         // Calls the function to convert string user input to lat/lon
         getCityGeocodes();
+        
+        // Checks if length of searchHistory array is longer than 5
+        if (searchHistory.length > 5) {
+            for (let i = searchHistory.length; i > 5; i--) {
+                // Removes the oldest elements
+                searchHistory.shift();
+            }
+        }
+        
+        // Checks if the array include the user input
+        if (!searchHistory.includes(cityInput)) {
+            // If it doesn't, user input is pushed to the array
+            searchHistory.push(cityInput);
+            
+            // Whilst the button list has more than 4 buttons
+            while (searchList.children.length > 4) {
+                // Remove the last child element
+                searchList.removeChild(searchList.lastChild);
+            }
+            
+            // Creates a variable for a button element
+            let cityButton = document.createElement("button");
+            // Adds class attributes and type attribute
+            cityButton.setAttribute("class", "list-group-item list-group-item-action button-list");
+            cityButton.setAttribute("type", "button");
+            
+            // Sets the innerHTML to the value of user input variable
+            cityButton.innerHTML = `${cityInput}`;
+            // Prepends the new button to the top of the parent element
+            searchList.prepend(cityButton);
+        }
+        // Adds the array to localStorage, with key "city"
+        localStorage.setItem("city", JSON.stringify(searchHistory));
+
+        // Removes any value form input field
+        document.querySelector("#search").value = "";
+        
     } else {
+        // Returns from event if input is an empty string
         return;
     }
+})
 
+
+// Event listener for button elements in history lists
+searchList.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    // Checks which element is source of event
+    if (event.target.matches (".button-list")) {
+        // Sets the value of that element to the cityInput variable
+        cityInput = event.target.textContent;
+        // Moves target element to the top of it's parent container
+        searchList.prepend(event.target);
+        // Calls the function to initial data call for weather data, with the updated variable value above 
+        getCityGeocodes();
+    }
 })
 
 
 
 // ** FUNCTIONS ** //
 
+function init () {
+    let restoreHistory = JSON.parse(localStorage.getItem("city"));
+
+    if (restoreHistory !== null) {
+        // TODO: Populate searchHistory buttons
+    }
+
+}
+
 // Function to convert the string input from user (city) to it's geocode equivalent, using the OpenWeather API
 function getCityGeocodes() {
-
 
     // Assign the API URL, with the dynamic value of cityInput, to a variable
     let geoURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=5&appid=c1055e335571b836bde1ca735096c6bc`;
@@ -70,15 +133,16 @@ function getCityGeocodes() {
             let lat = data[0].lat;
 
             // Sets the URL based on the variables above, and request metric output
-            let cityURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=c1055e335571b836bde1ca735096c6bc`;
+            cityURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=c1055e335571b836bde1ca735096c6bc`;
 
-            let fiveDayURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=c1055e335571b836bde1ca735096c6bc`
+            fiveDayURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=c1055e335571b836bde1ca735096c6bc`
 
             // Call the functions, current and 5 day forecast, to get data from API passing the URL saved to cityURL, as a parameter
             getCurrentWeather(cityURL);
             getNextFourDaysForecast(fiveDayURL);
-
+   
         })
+
 }
 
 
@@ -127,14 +191,24 @@ function getNextFourDaysForecast(fiveDayURL) {
             for (let i = 0; i < weatherData.length; i++) {
                 const index = weatherData[i];
 
+
                 // Variable storing their respective data, for future forecast days (4 not including current)
                 futureDayHumidity = index.main.humidity;
                 // As above, but output rounded to the nearest integer
                 futureDayTemp = Math.round(index.main.temp);
+                // Variable storing wind speed
                 futureDayWind = index.wind.speed;
                 // Stores the relevant code for use in building the correct URL to retrieve the icon
                 futureDayIconCode = index.weather[0].icon;
-                futureDayDescription = (index.weather[0].description);
+                // Variable storing weather description
+                futureDayDescription = index.weather[0].description;
+                // Variable storing the unix datetime
+                // let futureDate = index.dt;
+                // Using moment.js to format above.
+                futureDate = moment.unix(index.dt).format("dddd Do MMM");
+
+                console.log(futureDate);
+
                 // With the addition of the dynamic variable, it stores the URL for matching icon to weather conditions
                 futureDayIconURL = `https://openweathermap.org/img/wn/${futureDayIconCode}@2x.png`;
 
@@ -146,25 +220,21 @@ function getNextFourDaysForecast(fiveDayURL) {
 }
 
 
-
 // Renders the data for the future forecast (i.e. not current / todays) to the page
 function renderFutureWeatherInfo() {
 
     let dailyCollection = document.getElementById("future-forecast");
-    // now = moment();
-
 
     for (let i = 0; i < dailyCollection.children.length; i++) {
 
         let dayIndex = dailyCollection.children[i];
 
-        let futureDay = getDay(dayIndex);
-
+        // TODO: futureDate not rendering correctly, even though console.log is correct
         dayIndex.innerHTML = `    
                     <div class="card">
                         <div class="card-body">
                           <div class="d-flex">
-                                <h4 >${futureDay}</h4>
+                                <h6 class="date">${futureDate}</h6>
                                 </div>
                                 
                                 <div class="temp-desc d-flex flex-column text-center">
@@ -193,43 +263,15 @@ function renderCurrentWeatherInfo() {
     let currentInfoElement = document.getElementById("current-weather");
 
     // TODO: Update following string literal to fit new design / structure
-    currentInfoElement.innerHTML = `<h4 class="city-lg">${cityTitle}</h4>
-        
-            <p class="temp-lg">${currentTemp}</p>
-            <p class="desc-lg">${description}</p>
-            <img class="icon-lg" src=${iconURL} alt="Weather icon indicating ${description} conditions" />
-            <p class="humidity-lg">${currentHumidity}</p>
-            <p class="wind-lg">${currentWind}</p>
+    currentInfoElement.innerHTML = 
+    
+            `<h4 class="city-current">${cityTitle}</h4>
+            <p class="date-current">${today}</p>
+            <p class="temp-current">${currentTemp}</p>
+            <p class="desc-current">${description}</p>
+            <img class="icon-current" src=${iconURL} alt="Weather icon indicating ${description} conditions" />
+            <p class="humidity-current">${currentHumidity}</p>
+            <p class="wind-current">${currentWind}</p>
             `;
 }
 
-
-
-function getDay (daysAhead) {
-    // TODO: Create function using moment.js, to assign readable day values to the future forecast components
-    // let daysAhead = dayIndex + 1;
-    thisDay = moment().add(daysAhead, 'days');
-    // thisDay = now.add(1, 'd');
-    thisDay = thisDay.format('dddd Do');
-    return thisDay;
-}
-
-
-function storeSearchHistory () {
-    // TODO: Push the users search history of cities to localStorage / array, in the most efficient format to later retrieve when requested
-}
-
-function retrieveSearchHistory () {
-    // TODO: Retrieve data in localStorage, and render it to page
-}
-
-// ? API Reference
-// main.temp
-// main.humidity (%)
-// weather[0].description (overcast clouds)
-// weather[0].main (cloudy)
-// weather[0].icon (04n)
-// wind.speed (meter/sec)
-// name (London)
-
-// 0 7 15 22 30
