@@ -30,6 +30,7 @@ let futureDayIconURL;
 let futureDate;
 
 let searchHistory = [];
+let restoreHistory = JSON.parse(localStorage.getItem("city", searchHistory));
 
 
 // ** EVENT LISTENERS ** //
@@ -44,40 +45,19 @@ searchButton.addEventListener("click", function (event) {
     // Checks that there is input and returns if not
     if (cityInput !== "") {
         // Calls the function to convert string user input to lat/lon
-        getCityGeocodes();
         
-        // Checks if length of searchHistory array is longer than 5
-        if (searchHistory.length > 5) {
-            for (let i = searchHistory.length; i > 5; i--) {
-                // Removes the oldest elements
-                searchHistory.shift();
-            }
-        }
+        getCityGeocodes();
         
         // Checks if the array include the user input
         if (!searchHistory.includes(cityInput)) {
             // If it doesn't, user input is pushed to the array
             searchHistory.push(cityInput);
+            // Adds the array to localStorage, with key "city"
+            localStorage.setItem("city", JSON.stringify(searchHistory));
             
-            // Whilst the button list has more than 4 buttons
-            while (searchList.children.length > 4) {
-                // Remove the last child element
-                searchList.removeChild(searchList.lastChild);
-            }
-            
-            // Creates a variable for a button element
-            let cityButton = document.createElement("button");
-            // Adds class attributes and type attribute
-            cityButton.setAttribute("class", "list-group-item list-group-item-action button-list");
-            cityButton.setAttribute("type", "button");
-            
-            // Sets the innerHTML to the value of user input variable
-            cityButton.innerHTML = `${cityInput}`;
-            // Prepends the new button to the top of the parent element
-            searchList.prepend(cityButton);
+            renderSearchHistory();
         }
-        // Adds the array to localStorage, with key "city"
-        localStorage.setItem("city", JSON.stringify(searchHistory));
+
 
         // Removes any value form input field
         document.querySelector("#search").value = "";
@@ -109,10 +89,28 @@ searchList.addEventListener("click", function (event) {
 // ** FUNCTIONS ** //
 
 function init () {
-    let restoreHistory = JSON.parse(localStorage.getItem("city"));
-
+    
     if (restoreHistory !== null) {
-        // TODO: Populate searchHistory buttons
+
+        while (restoreHistory.length > 5) {
+            restoreHistory.shift();
+        }
+
+        for (let i = 0; i < restoreHistory.length; i++) {
+            const index = restoreHistory[i];
+            
+            searchHistory.push(index);
+            // Creates a variable for a button element
+            let cityButton = document.createElement("button");
+            // Adds class attributes and type attribute
+            cityButton.setAttribute("class", "list-group-item list-group-item-action button-list");
+            cityButton.setAttribute("type", "button");
+            
+            // Sets the innerHTML to the value of user input variable
+            cityButton.innerHTML = `${index}`;
+            // Prepends the new button to the top of the parent element
+            searchList.prepend(cityButton);
+        }
     }
 
 }
@@ -275,3 +273,32 @@ function renderCurrentWeatherInfo() {
             `;
 }
 
+function renderSearchHistory () {
+    // Checks if length of searchHistory array is longer than 5
+    if (searchHistory.length > 5) {
+        for (let i = searchHistory.length; i > 5; i--) {
+            // Removes the oldest elements
+            searchHistory.shift();
+        }
+    }
+        
+        // Whilst the button list has more than 4 buttons
+        while (searchList.children.length > 4) {
+            // Remove the last child element
+            searchList.removeChild(searchList.lastChild);
+        }
+        
+        // Creates a variable for a button element
+        let cityButton = document.createElement("button");
+        // Adds class attributes and type attribute
+        cityButton.setAttribute("class", "list-group-item list-group-item-action button-list");
+        cityButton.setAttribute("type", "button");
+        
+        // Sets the innerHTML to the value of user input variable
+        cityButton.innerHTML = `${cityInput}`;
+        // Prepends the new button to the top of the parent element
+        searchList.prepend(cityButton);
+    
+}
+
+init();
