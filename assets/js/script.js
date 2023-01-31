@@ -10,7 +10,9 @@ let clearButton = document.createElement("button");
 
 // ** VARIABLES (Time) ** //
 // Today's date, formatted with moment.js
-let today = moment().format('dddd Do MMM');
+// let today = moment().format('dddd Do MMM');
+let now = dayjs().format("D MMM YYYY");
+let currentDate;
 
 // ** VARIABLES (Data) ** //
 // Assign the #search input value to a variable
@@ -34,6 +36,7 @@ let fiveDayURL;
 let futureDayIconURL;
 let futureDate;
 
+let weatherData = [];
 let searchHistory = [];
 let restoreHistory = JSON.parse(localStorage.getItem("city", searchHistory));
 
@@ -133,6 +136,7 @@ function init () {
     
 }
 
+
 // Function to convert the string input from user (city) to it's geocode equivalent, using the OpenWeather API
 function getCityGeocodes() {
     
@@ -162,13 +166,14 @@ function getCityGeocodes() {
 }
 
 
-
 // Function that takes a correctly formatted URL and assigns parts of the response to variables
 function getCurrentWeather(cityURL) {
     fetch(cityURL)
     .then(response => response.json())
     .then(function (data) {
         
+        // Current date
+        currentDate = now;
         // Stores the description of weather condition
         description = (data.weather[0].description);
         // Stores the icon code of the weather condition
@@ -199,7 +204,7 @@ function getNextFourDaysForecast(fiveDayURL) {
     .then(function (data) {
         
         // Create an empty array to hold API data
-        let weatherData = [];
+        // let weatherData = [];
         // Push the relevant indices to the weatherData array
         weatherData.push(data.list[7], data.list[15], data.list[22], data.list[30]);
         
@@ -218,59 +223,47 @@ function getNextFourDaysForecast(fiveDayURL) {
             futureDayIconCode = index.weather[0].icon;
             // Variable storing weather description
             futureDayDescription = index.weather[0].description;
-            // Variable storing the unix datetime
-            // let futureDate = index.dt;
-            // Using moment.js to format above.
-            futureDate = moment.unix(index.dt).format("dddd Do MMM");
-            
-            console.log(futureDate);
+            // Variable storing the unix datetime and using dayjs to format
+            futureDate = dayjs.unix(index.dt).format("D MMM YYYY");
+            forecastDates = [];
             
             // With the addition of the dynamic variable, it stores the URL for matching icon to weather conditions
             futureDayIconURL = `https://openweathermap.org/img/wn/${futureDayIconCode}@2x.png`;
             
             // Calls the function to render the information stored above, on the page
-            renderFutureWeatherInfo();
+            // renderFutureWeatherInfo();
+
+            let dailyCollection = document.getElementById("future-forecast");
+
+            let forecastDayElement = document.createElement("div");
+            forecastDayElement.setAttribute("class", "daily-forecast col-md-6 col-lg-3");
+  
+            forecastDayElement.innerHTML =
+            `<div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <h6 class="date">${futureDate}</h6>
+            </div>
+            
+            <div class="temp-desc d-flex flex-column text-center">
+            <img class="icon" src=${futureDayIconURL} alt="Weather icon indicating ${futureDayDescription} conditions" />
+            <h5 class="temp display-4 mb-0 font-weight-bold">${futureDayTemp}°C</h5>
+            <span class="small desc">${futureDayDescription}</span>
+            </div>
+            
+            <div class="d-flex align-items-center further-info text-center">
+            <div class="flex-grow-1">
+            <div><i class="bi bi-wind"></i><span> Wind Speed: </span><span class="ms-1">${futureDayWind}m/s</span></div>
+            <div><i class="bi bi-moisture"></i> <span class="ms-1">Humidity: ${futureDayHumidity}%</span>
+            </div>
+            </div>`
+            
+            dailyCollection.append(forecastDayElement);
+    
         }
-        
     })
 }
 
-
-// Renders the data for the future forecast (i.e. not current / todays) to the page
-function renderFutureWeatherInfo() {
-    
-    let dailyCollection = document.getElementById("future-forecast");
-    
-    for (let i = 0; i < dailyCollection.children.length; i++) {
-        
-        let dayIndex = dailyCollection.children[i];
-        
-        // TODO: futureDate not rendering correctly, even though console.log is correct
-        dayIndex.innerHTML = `    
-        <div class="card">
-        <div class="card-body">
-        <div class="d-flex">
-        <h6 class="date">${futureDate}</h6>
-        </div>
-        
-        <div class="temp-desc d-flex flex-column text-center">
-        <img class="icon" src=${futureDayIconURL} alt="Weather icon indicating ${futureDayDescription} conditions" />
-        <h5 class="temp display-4 mb-0 font-weight-bold">${futureDayTemp}°C</h5>
-        <span class="small desc">${futureDayDescription}</span>
-        </div>
-        
-        <div class="d-flex align-items-center further-info text-center">
-        <div class="flex-grow-1">
-        <div><i class="bi bi-wind"></i><span> Wind Speed: </span><span class="ms-1">${futureDayWind}m/s</span></div>
-        <div><i class="bi bi-moisture"></i> <span class="ms-1">Humidity: ${futureDayHumidity}%</span>
-        </div>
-        </div>
-        </div>`
-        
-        dailyCollection.appendChild(dayIndex);
-        
-    }
-}
 
 
 // Render the current / todays weather data to the page
@@ -278,17 +271,26 @@ function renderCurrentWeatherInfo() {
     
     let currentInfoElement = document.getElementById("current-weather");
     
-    // TODO: Update following string literal to fit new design / structure
-    currentInfoElement.innerHTML = 
+    currentInfoElement.innerHTML = `<div class="card">
+    <div class="card-body">
+        <div class="d-flex">
+        <h3>${cityTitle}</h3>
+    </div>
+        
+    <div class="temp-desc d-flex flex-column text-center">
+    <h5 class="date">${now}</h5>
+    <img class="icon" src=${iconURL} alt="Weather icon indicating ${description} conditions" />
+    <h5 class="temp display-4 mb-0 font-weight-bold">${currentTemp}°C</h5>
+    <span class="small desc">${description}</span>
+    </div>
     
-    `<h4 class="city-current">${cityTitle}</h4>
-    <p class="date-current">${today}</p>
-    <p class="temp-current">${currentTemp}</p>
-    <p class="desc-current">${description}</p>
-    <img class="icon-current" src=${iconURL} alt="Weather icon indicating ${description} conditions" />
-    <p class="humidity-current">${currentHumidity}</p>
-    <p class="wind-current">${currentWind}</p>
-    `;
+    <div class="d-flex align-items-center further-info text-center">
+    <div class="flex-grow-1">
+    <div><i class="bi bi-wind"></i><span> Wind Speed: </span><span class="ms-1">${currentWind}m/s</span></div>
+    <div><i class="bi bi-moisture"></i> <span class="ms-1">Humidity: ${currentHumidity}%</span>
+    </div>
+    </div>`
+
 }
 
 
@@ -326,6 +328,7 @@ function renderSearchHistory () {
 // Renders the clear all button elements, with appropiate attributes
 function renderClearButton () {
     clearButton.setAttribute("class", "list-group-item list-group-item-danger");
+    clearButton.setAttribute("id", "button-clear")
     clearButton.setAttribute("type", "button");
     clearButton.textContent = "Clear All";
     searchList.append(clearButton);

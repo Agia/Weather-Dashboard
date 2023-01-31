@@ -20,13 +20,17 @@
     
                 <header class="col-md-6">
                     <h1>Weather Dashboard</h1>
-                    <form id="search-form">
-                        <input type="text" name="search" id="search">
-                        <button id="button-search">Search</button>
+                    <form id="search-form input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter city name" name="search" id="search">
+                        <button id="button-search" class="btn btn-outline-secondary">Search</button>
                     </form>
                     <p>Search for a city above, or click on a city name from the list of your five most recent searches.</p>
 
                 </header>
+                  
+
+
+
                 
                 <div class="col-md-6" id="search-history">
                     
@@ -47,18 +51,20 @@
 
 
     <div class="row" id="future-forecast">
+       
+        <!-- <div class="daily-forecast col-md-6 col-lg-3"></div>
         <div class="daily-forecast col-md-6 col-lg-3"></div>
         <div class="daily-forecast col-md-6 col-lg-3"></div>
-        <div class="daily-forecast col-md-6 col-lg-3"></div>
-        <div class="daily-forecast col-md-6 col-lg-3"></div>
+        <div class="daily-forecast col-md-6 col-lg-3"></div> -->
     </div>
+
     </div>
 
     
 
     <!-- SCRIPTS -->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script> -->
     <script src="./assets/js/script.js"></script>
 </body>
 
