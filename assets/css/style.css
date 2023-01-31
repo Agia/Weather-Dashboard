@@ -23,6 +23,7 @@ h1 {
     font-family: var(--title);
 }
 
+/* Input for search */
 #search {
     max-width: 100%;
     margin: 1rem auto 0;
@@ -30,6 +31,7 @@ h1 {
 
 }
 
+/* Search button */
 #button-search {
     margin: 5px auto 1rem;
     width: 100%;
@@ -40,15 +42,18 @@ h1 {
     font-weight: bold;
 }
 
+/* Text beneath search input */
 #intro-text {
    margin-top: 1rem;
 }
 
+/* Container for search history */
 #search-history {
     height: 100%;;
     margin: 2rem auto
 }
 
+/* Clear All button */
 #button-clear {
     border: var(--border-color);
     border-top: none;
@@ -57,10 +62,9 @@ h1 {
     font-weight: bold;
 }
 
+/* Buttons used in search history list */
 .button-list {
     text-transform: capitalize;
-
-    
 }
 
 .button-list:nth-of-type(odd) {
@@ -72,14 +76,16 @@ h1 {
     border-bottom: none;
 }
 
+/* Container for current day weather info */
 #current-weather {
     margin: 2rem .5rem 0;
 }
-  
+
 .card {
     border: var(--border-dark);
 }
 
+/*  Date class for dynamic date info */
 .date, .date-lg {
     text-align: left;
     border-bottom: var(--border-color);
@@ -89,20 +95,22 @@ h1 {
     border-bottom: none;
 }
 
+/* Container for five day forecast */
 #future-forecast {
     margin: 2rem auto;
     display: flex;
     justify-content: center;
 }
 
+/* Container for each individual day in five day forecast */
 .daily-forecast {
     padding-bottom: 2rem;
     width: 20%;
 
 }
 
+/* Weather description */
 .desc {
-    /* text-transform: capitalize; */
     margin: .7rem auto;
     font-size: 1.4rem;
     border-bottom: var(--border-color);
@@ -125,7 +133,6 @@ h1 {
     }
     
     .daily-forecast {
-
         min-width: 220px;
     
     }

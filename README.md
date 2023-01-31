@@ -25,8 +25,8 @@ Each of the following libraries / frameworks were used in this project to some d
 
 **For functionality:**
 
-- [dayjs](https://day.js.org)
 - [OpenWeather API](https://openweathermap.org/) for retrieving weather information to populate the dashboard.
+- [dayjs](https://day.js.org)
 
 **For user experience and design:**
 
