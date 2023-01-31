@@ -25,15 +25,14 @@ Each of the following libraries / frameworks were used in this project to some d
 
 **For functionality:**
 
-- [Moment.js](https://momentjs.com)
+- [dayjs](https://day.js.org)
 - [OpenWeather API](https://openweathermap.org/) for retrieving weather information to populate the dashboard.
 
 **For user experience and design:**
 
-- <!-- TODO: CSS FRAMEWORK IF USED -->
-- <!-- TODO: INSERT ANY FONTS USED -->
-- <!-- TODO: INSERT ANY ICONS USED -->
-<!-- - [Weather icons created by Freepik](https://www.flaticon.com/freepik) distributed via Flaticon -->
+- [Bootstrap](https://getbootstrap.com)
+- [Google Fonts](fonts.google.com), for Staatliches and Bebas Neue typefaces.
+
 
 **For reference:**
 

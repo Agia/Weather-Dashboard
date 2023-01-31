@@ -7,10 +7,13 @@ let cityListButton = document.querySelector(".button-list");
 let searchList = document.querySelector("#search-list");
 // Clear all button element
 let clearButton = document.createElement("button");
+// Container for current day forecast
+let currentInfoElement = document.getElementById("current-weather");
+// Container for future forecast elements
+let dailyCollection = document.getElementById("future-forecast");
 
 // ** VARIABLES (Time) ** //
-// Today's date, formatted with moment.js
-// let today = moment().format('dddd Do MMM');
+// Today's date, formatted with dayjs
 let now = dayjs().format("D MMM YYYY");
 let currentDate;
 
@@ -36,7 +39,6 @@ let fiveDayURL;
 let futureDayIconURL;
 let futureDate;
 
-let weatherData = [];
 let searchHistory = [];
 let restoreHistory = JSON.parse(localStorage.getItem("city", searchHistory));
 
@@ -203,8 +205,10 @@ function getNextFourDaysForecast(fiveDayURL) {
     .then(response => response.json())
     .then(function (data) {
         
+        dailyCollection.innerHTML = "";
+
         // Create an empty array to hold API data
-        // let weatherData = [];
+        let weatherData = [];
         // Push the relevant indices to the weatherData array
         weatherData.push(data.list[7], data.list[15], data.list[22], data.list[30]);
         
@@ -233,7 +237,7 @@ function getNextFourDaysForecast(fiveDayURL) {
             // Calls the function to render the information stored above, on the page
             // renderFutureWeatherInfo();
 
-            let dailyCollection = document.getElementById("future-forecast");
+            // let dailyCollection = document.getElementById("future-forecast");
 
             let forecastDayElement = document.createElement("div");
             forecastDayElement.setAttribute("class", "daily-forecast col-md-6 col-lg-3");
@@ -253,8 +257,8 @@ function getNextFourDaysForecast(fiveDayURL) {
             
             <div class="d-flex align-items-center further-info text-center">
             <div class="flex-grow-1">
-            <div><i class="bi bi-wind"></i><span> Wind Speed: </span><span class="ms-1">${futureDayWind}m/s</span></div>
-            <div><i class="bi bi-moisture"></i> <span class="ms-1">Humidity: ${futureDayHumidity}%</span>
+            <div class="wind"><i class="bi bi-wind"></i><span> Wind Speed: </span><span class="ms-1">${futureDayWind}m/s</span></div>
+            <div class="humidity"><i class="bi bi-moisture"></i> <span class="ms-1">Humidity: ${futureDayHumidity}%</span>
             </div>
             </div>`
             
@@ -269,7 +273,6 @@ function getNextFourDaysForecast(fiveDayURL) {
 // Render the current / todays weather data to the page
 function renderCurrentWeatherInfo() {
     
-    let currentInfoElement = document.getElementById("current-weather");
     
     currentInfoElement.innerHTML = `<div class="card">
     <div class="card-body">
@@ -341,6 +344,8 @@ function clearAll () {
         searchList.innerHTML = "";
     }
     localStorage.clear();
+    currentInfoElement.innerHTML = "";
+    dailyCollection.innerHTML = "";
 }
 
 
