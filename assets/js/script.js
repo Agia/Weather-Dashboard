@@ -39,6 +39,7 @@ let restoreHistory = JSON.parse(localStorage.getItem("city", searchHistory));
 
 
 // ** EVENT LISTENERS ** //
+
 // Adds an eventListener, on click, to the search button
 searchButton.addEventListener("click", function (event) {
     // Prevents default action
@@ -89,6 +90,7 @@ searchList.addEventListener("click", function (event) {
     }
 })
 
+
 // Event listener for Clear All button, that empties search List contents and localStorage
 clearButton.addEventListener("click", function (event) {
     event.preventDefault();
@@ -100,14 +102,15 @@ clearButton.addEventListener("click", function (event) {
 
 // ** FUNCTIONS ** //
 
+// Function that is called on page load
 function init () {
-    
+    // Checks if array is empty
     if (restoreHistory !== null) {
-        
+        // Whilst array length is longer than 5, remove first (i.e. oldest) element
         while (restoreHistory.length > 5) {
             restoreHistory.shift();
         }
-        
+        // Iterate through array
         for (let i = 0; i < restoreHistory.length; i++) {
             const index = restoreHistory[i];
             
@@ -124,10 +127,8 @@ function init () {
             searchList.prepend(cityButton);
         }
         
-        clearButton.setAttribute("class", "list-group-item list-group-item-danger");
-        clearButton.setAttribute("type", "button");
-        clearButton.textContent = "Clear All";
-        searchList.append(clearButton);
+        // Render clear all button
+        renderClearButton();
     }
     
 }
