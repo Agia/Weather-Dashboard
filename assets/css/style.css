@@ -19,7 +19,7 @@ body {
 }
 
 h1 {
-    margin: 1rem auto 2rem;
+    margin: 2rem auto;
     font-family: var(--title);
 }
 
@@ -40,8 +40,8 @@ h1 {
     font-weight: bold;
 }
 
-p {
-    font-family: var(--bod4);
+#intro-text {
+   margin-top: 1rem;
 }
 
 #search-history {
@@ -91,17 +91,20 @@ p {
 
 #future-forecast {
     margin: 2rem auto;
+    display: flex;
+    justify-content: center;
 }
 
 .daily-forecast {
     padding-bottom: 2rem;
+    width: 20%;
 
 }
 
 .desc {
     /* text-transform: capitalize; */
     margin: .7rem auto;
-    font-size: 2rem;
+    font-size: 1.4rem;
     border-bottom: var(--border-color);
 }
 
@@ -112,4 +115,18 @@ p {
 
 .bi {
     margin-right: .5rem;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 1200px) {
+    #future-forecast {
+        flex-wrap: wrap;
+    }
+    
+    .daily-forecast {
+
+        min-width: 220px;
+    
+    }
 }

@@ -200,7 +200,7 @@ function getNextFourDaysForecast(fiveDayURL) {
         // Create an empty array to hold API data
         let weatherData = [];
         // Push the relevant indices to the weatherData array
-        weatherData.push(data.list[7], data.list[15], data.list[22], data.list[30]);
+        weatherData.push(data.list[7], data.list[15], data.list[22], data.list[30], data.list[38]);
         
         // For loop to retrieve and assign data to be later rendered on page
         for (let i = 0; i < weatherData.length; i++) {
@@ -230,7 +230,7 @@ function getNextFourDaysForecast(fiveDayURL) {
             // let dailyCollection = document.getElementById("future-forecast");
 
             let forecastDayElement = document.createElement("div");
-            forecastDayElement.setAttribute("class", "daily-forecast col-md-6 col-lg-3");
+            forecastDayElement.setAttribute("class", "daily-forecast");
   
             forecastDayElement.innerHTML =
             `<div class="card">
