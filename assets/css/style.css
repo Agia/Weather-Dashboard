@@ -6,7 +6,9 @@
 /* VARIABLES */
 :root {
     --title: "Staatliches";
-    --body: "Bebas Neue"
+    --body: "Bebas Neue";
+    --border-dark: 3px black solid;
+    --border-color: 3px teal solid;
 }
 
 /* STYLES */
@@ -24,7 +26,7 @@ h1 {
 #search {
     max-width: 100%;
     margin: 1rem auto 0;
-    border: 3px black solid;
+    border: var(--border-dark);
 
 }
 
@@ -32,7 +34,7 @@ h1 {
     margin: 5px auto 1rem;
     width: 100%;
     border-radius: 0%;
-    border: 3px black solid;
+    border: var(--border-dark);
     background-color: teal;
     color: white;
     font-weight: bold;
@@ -44,11 +46,12 @@ p {
 
 #search-history {
     height: 100%;;
-    margin: .5rem auto
+    margin: 2rem auto
 }
 
 #button-clear {
-    border: teal 3px solid;
+    border: var(--border-color);
+    border-top: none;
     color: white;
     background-color: rgb(34, 34, 34);
     font-weight: bold;
@@ -56,19 +59,34 @@ p {
 
 .button-list {
     text-transform: capitalize;
+
     
 }
 
-#current-forecast {
-    margin: 10rem auto;
+.button-list:nth-of-type(odd) {
+    border-top: var(--border-color);
+    border-bottom: var(--border-color);
+}
+
+.button-list:nth-last-of-type() {
+    border-bottom: none;
+}
+
+#current-weather {
+    margin: 2rem .5rem 0;
 }
   
 .card {
-    border: black 3px solid;
+    border: var(--border-dark);
 }
 
-.date {
+.date, .date-lg {
     text-align: left;
+    border-bottom: var(--border-color);
+}
+
+.date-lg {
+    border-bottom: none;
 }
 
 #future-forecast {
@@ -81,10 +99,10 @@ p {
 }
 
 .desc {
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     margin: .7rem auto;
-    font-size: 1rem;
-    border-bottom: 3px teal solid;
+    font-size: 2rem;
+    border-bottom: var(--border-color);
 }
 
 .icon {
@@ -92,5 +110,6 @@ p {
     max-width: 10rem;
 }
 
-/* MEDIA QUERIES */
-/* @media screen and (max-width: 900px) */
+.bi {
+    margin-right: .5rem;
+}

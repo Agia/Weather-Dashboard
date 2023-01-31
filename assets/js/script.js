@@ -15,13 +15,13 @@ let dailyCollection = document.getElementById("future-forecast");
 // ** VARIABLES (Time) ** //
 // Today's date, formatted with dayjs
 let now = dayjs().format("D MMM YYYY");
-let currentDate;
+// let currentDate;
 
 // ** VARIABLES (Data) ** //
-// Assign the #search input value to a variable
+// Assign the #search input value to a variable, used across functions
 let cityInput;
 
-// Variables to store the return API values for their respective names
+// Variables to store the return API values for their respective names, global due to use across functions
 let currentTemp;
 let currentHumidity;
 let currentWind;
@@ -29,16 +29,8 @@ let iconCode;
 let description;
 let cityURL;
 let iconURL;
-// Variables to store the future daily forecasts data
-let futureDayTemp;
-let futureDayHumidity;
-let futureDayWind;
-let futureDayIconCode;
-let futureDayDescription;
-let fiveDayURL;
-let futureDayIconURL;
-let futureDate;
 
+// For setting and retrieving data to localStorage
 let searchHistory = [];
 let restoreHistory = JSON.parse(localStorage.getItem("city", searchHistory));
 
@@ -174,8 +166,6 @@ function getCurrentWeather(cityURL) {
     .then(response => response.json())
     .then(function (data) {
         
-        // Current date
-        currentDate = now;
         // Stores the description of weather condition
         description = (data.weather[0].description);
         // Stores the icon code of the weather condition
@@ -218,21 +208,21 @@ function getNextFourDaysForecast(fiveDayURL) {
             
             
             // Variable storing their respective data, for future forecast days (4 not including current)
-            futureDayHumidity = index.main.humidity;
+            let futureDayHumidity = index.main.humidity;
             // As above, but output rounded to the nearest integer
-            futureDayTemp = Math.round(index.main.temp);
+            let futureDayTemp = Math.round(index.main.temp);
             // Variable storing wind speed
-            futureDayWind = index.wind.speed;
+            let futureDayWind = index.wind.speed;
             // Stores the relevant code for use in building the correct URL to retrieve the icon
-            futureDayIconCode = index.weather[0].icon;
+            let futureDayIconCode = index.weather[0].icon;
             // Variable storing weather description
-            futureDayDescription = index.weather[0].description;
+            let futureDayDescription = index.weather[0].description;
             // Variable storing the unix datetime and using dayjs to format
-            futureDate = dayjs.unix(index.dt).format("D MMM YYYY");
+            let futureDate = dayjs.unix(index.dt).format("D MMM YYYY");
             forecastDates = [];
             
             // With the addition of the dynamic variable, it stores the URL for matching icon to weather conditions
-            futureDayIconURL = `https://openweathermap.org/img/wn/${futureDayIconCode}@2x.png`;
+            let futureDayIconURL = `https://openweathermap.org/img/wn/${futureDayIconCode}@2x.png`;
             
             // Calls the function to render the information stored above, on the page
             // renderFutureWeatherInfo();
@@ -246,19 +236,19 @@ function getNextFourDaysForecast(fiveDayURL) {
             `<div class="card">
             <div class="card-body">
                 <div class="d-flex">
-                    <h6 class="date">${futureDate}</h6>
+                    <h5 class="date">${futureDate}</h5>
             </div>
             
             <div class="temp-desc d-flex flex-column text-center">
             <img class="icon" src=${futureDayIconURL} alt="Weather icon indicating ${futureDayDescription} conditions" />
             <h5 class="temp display-4 mb-0 font-weight-bold">${futureDayTemp}°C</h5>
-            <span class="small desc">${futureDayDescription}</span>
+            <span class="desc">${futureDayDescription}</span>
             </div>
             
             <div class="d-flex align-items-center further-info text-center">
             <div class="flex-grow-1">
-            <div class="wind"><i class="bi bi-wind"></i><span> Wind Speed: </span><span class="ms-1">${futureDayWind}m/s</span></div>
-            <div class="humidity"><i class="bi bi-moisture"></i> <span class="ms-1">Humidity: ${futureDayHumidity}%</span>
+            <div class="wind"><i class="bi bi-wind"></i><span>Wind Speed: </span><span class="ms-1">${futureDayWind} m/s</span></div>
+            <div class="humidity"><i class="bi bi-moisture"></i> <span class="ms-1"> Humidity: ${futureDayHumidity} %</span>
             </div>
             </div>`
             
@@ -273,24 +263,24 @@ function getNextFourDaysForecast(fiveDayURL) {
 // Render the current / todays weather data to the page
 function renderCurrentWeatherInfo() {
     
-    
+    // Fill the container with HTML for current weather, injecting variable values
     currentInfoElement.innerHTML = `<div class="card">
     <div class="card-body">
         <div class="d-flex">
-        <h3>${cityTitle}</h3>
+        <h2>${cityTitle}</h2>
     </div>
         
     <div class="temp-desc d-flex flex-column text-center">
-    <h5 class="date">${now}</h5>
+    <h4 class="date-lg">${now}</h4>
     <img class="icon" src=${iconURL} alt="Weather icon indicating ${description} conditions" />
     <h5 class="temp display-4 mb-0 font-weight-bold">${currentTemp}°C</h5>
-    <span class="small desc">${description}</span>
+    <span class="desc">${description}</span>
     </div>
     
     <div class="d-flex align-items-center further-info text-center">
     <div class="flex-grow-1">
-    <div><i class="bi bi-wind"></i><span> Wind Speed: </span><span class="ms-1">${currentWind}m/s</span></div>
-    <div><i class="bi bi-moisture"></i> <span class="ms-1">Humidity: ${currentHumidity}%</span>
+    <div><i class="bi bi-wind"></i><span> Wind Speed: </span><span class="ms-1">${currentWind} m/s</span></div>
+    <div><i class="bi bi-moisture"></i> <span class="ms-1">Humidity: ${currentHumidity} %</span>
     </div>
     </div>`
 
